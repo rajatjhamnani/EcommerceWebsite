@@ -1,0 +1,34 @@
+.banner {
+  background: red;
+  width: 100%;
+  margin-top: 2px;
+  text-align: center;
+  font-size: ;
+}
+.star {
+  height: 200px;
+  text-align: center;
+}
+.font {
+  font-size: 500%;
+}
+.bold {
+  padding: 20px 0;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 100px;
+}
+.column {
+  padding: 20px 0;
+}
+.feet {
+  height: 100px;
+  background-color: aqua;
+}
+.float {
+  text-align: left;
+  padding-left: 15%;
+  font-size: 300%;
+}
+.link {
+  padding-bottom: 1000%;
+}
