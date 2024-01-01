@@ -1,4 +1,6 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
+
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 const NavbarComponent = (props) => {
   return (
@@ -8,10 +10,13 @@ const NavbarComponent = (props) => {
           <Navbar.Brand href="/">BUY BUDDY STORE</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/">Store</Nav.Link>
+            <Nav.Link href="store">Store</Nav.Link>
             <Nav.Link href="/">About</Nav.Link>
           </Nav>
-          <Button variant="info">Cart-{"0"}</Button>
+
+          <Nav.Link href="cart">
+            <Button variant="info">Cart-{"0"}</Button>
+          </Nav.Link>
         </Container>
       </Navbar>
     </>
