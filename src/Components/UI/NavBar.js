@@ -1,25 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { CartContext } from "../Global/CartContext";
+
 const NavbarComponent = (props) => {
+  const { qty } = useContext(CartContext);
+
   return (
     <>
       <Navbar bg="dark" expand="sm" variant="dark">
         <Container>
-          <Navbar.Brand href="/">BUY BUDDY STORE</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            BUY BUDDY STORE
+          </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="store">Store</Nav.Link>
-            <Nav.Link href="/">About</Nav.Link>
+            <Nav.Link as={NavLink} to="/" exact>
+              Home
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/store">
+              Store
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/about">
+              About
+            </Nav.Link>
           </Nav>
 
-          <Nav.Link href="cart">
-            <Button variant="info">Cart-{"0"}</Button>
-          </Nav.Link>
+          <Link to="/cart">
+            <Button variant="info">Cart-{qty}</Button>
+          </Link>
         </Container>
       </Navbar>
     </>
   );
 };
+
 export default NavbarComponent;

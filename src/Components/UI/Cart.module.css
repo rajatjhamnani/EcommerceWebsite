@@ -19,3 +19,13 @@ td img {
   max-width: 100px;
   height: auto;
 }
+.btn {
+  margin: 5px;
+  cursor: pointer;
+}
+.btn button {
+  background-color: gainsboro;
+  border: 3px solid black;
+  border-radius: 10px;
+  color: black;
+}

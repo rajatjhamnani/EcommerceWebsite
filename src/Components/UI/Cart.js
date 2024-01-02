@@ -1,41 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./Cart.module.css";
+import { CartContext } from "../Global/CartContext";
 
 const Cart = () => {
-  const cartElements = [
-    {
-      title: "Colors",
+  const { shoppingCart, totalPrice, qty, dispatch } = useContext(CartContext);
 
-      price: 100,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-
-      quantity: 2,
-    },
-
-    {
-      title: "Black and white Colors",
-
-      price: 50,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-
-      quantity: 3,
-    },
-
-    {
-      title: "Yellow and Black Colors",
-
-      price: 70,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-
-      quantity: 1,
-    },
-  ];
   return (
     <table className={classes.table}>
       <thead>
@@ -44,22 +13,69 @@ const Cart = () => {
           <th>Item</th>
           <th>Price</th>
           <th>Quantity</th>
+          <th>Button</th>
         </tr>
       </thead>
       <tbody>
-        {cartElements.map((item, index) => (
-          <tr>
-            <td>
-              <img src={item.imageUrl} />
-            </td>
-            <td>{item.title}</td>
-            <td>{item.price}</td>
-            <td>{item.quantity}</td>
-            <td>
-              <button style={{ backgroundColor: "Red" }}>Remove</button>
-            </td>
-          </tr>
-        ))}
+        {shoppingCart.length > 0 ? (
+          shoppingCart.map((cart) => (
+            <tr key={cart.id}>
+              <td>
+                <img src={cart.imageUrl} />
+              </td>
+              <td>{cart.title}</td>
+              <td>{cart.price}</td>
+
+              <td>{cart.qty}</td>
+              <td>
+                <div className={classes.btn}>
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: "INC",
+                        id: cart.id,
+                        cart: cart,
+                      })
+                    }
+                  >
+                    +
+                  </button>
+                  {cart.qty}
+                  <button
+                    onClick={() =>
+                      dispatch({
+                        type: "DEC",
+                        id: cart.id,
+                        cart: cart,
+                      })
+                    }
+                  >
+                    -
+                  </button>
+                </div>
+                <button
+                  style={{
+                    backgroundColor: "Red",
+                    border: "1px solid ",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    dispatch({
+                      type: "DELETE",
+                      id: cart.id,
+                      cart: cart,
+                    })
+                  }
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <h1>your cart is Empty</h1>
+        )}
       </tbody>
     </table>
   );
