@@ -4,6 +4,7 @@ import { Container, Row, Card, Col, Button } from "react-bootstrap";
 import { ProductContext } from "../Global/ProductContext";
 import { CartContext } from "../Global/CartContext";
 import Header from "./Header";
+import Footer from "./Footer";
 const Banner = (props) => {
   const { products } = useContext(ProductContext);
   const { dispatch } = useContext(CartContext);
@@ -44,13 +45,7 @@ const Banner = (props) => {
           </Row>
         </Container>
       </body>
-      <footer>
-        <div className={classes.footer}>
-          <div className={classes.feet}>
-            <p className={classes.float}>The Generic</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -8,7 +8,13 @@ const NavbarComponent = (props) => {
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          position: "fixed",
+          width: "100%",
+          zIndex: "1",
+        }}
+      >
         <Navbar bg="dark" expand="sm" variant="dark">
           <Container>
             <Navbar.Brand as={Link} to="/">
