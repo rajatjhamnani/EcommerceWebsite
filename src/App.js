@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavbarComponent from "./Components/UI/NavBar";
 import Cart from "./Components/UI/Cart";
-
+import About from "./Components/UI/About";
 import Banner from "./Components/UI/Banner";
 import ProductContextProvider from "./Components/Global/ProductContext";
 import CartContextProvider from "./Components/Global/CartContext";
@@ -18,6 +18,7 @@ function App() {
             <Routes>
               <Route path="cart" exact Component={Cart} />
               <Route path="store" exact Component={Banner} />
+              <Route path="about" exact Component={About} />
             </Routes>
           </Router>
         </CartContextProvider>
