@@ -3,17 +3,14 @@ import classes from "./Banner.module.css";
 import { Container, Row, Card, Col, Button } from "react-bootstrap";
 import { ProductContext } from "../Global/ProductContext";
 import { CartContext } from "../Global/CartContext";
+import Header from "./Header";
 const Banner = (props) => {
   const { products } = useContext(ProductContext);
   const { dispatch } = useContext(CartContext);
 
   return (
     <div className={classes.banner}>
-      <header>
-        <div className={classes.star}>
-          <p className={classes.font}>The Generic</p>
-        </div>
-      </header>
+      <Header />
       <body>
         <Container>
           <div className={classes.bold}>

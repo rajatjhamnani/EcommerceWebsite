@@ -6,6 +6,7 @@ import About from "./Components/UI/About";
 import Banner from "./Components/UI/Banner";
 import ProductContextProvider from "./Components/Global/ProductContext";
 import CartContextProvider from "./Components/Global/CartContext";
+import Home from "./Components/UI/Home";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <NavbarComponent />
 
             <Routes>
+              <Route path="/" exact Component={Home} />
               <Route path="cart" exact Component={Cart} />
               <Route path="store" exact Component={Banner} />
               <Route path="about" exact Component={About} />

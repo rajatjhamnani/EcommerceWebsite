@@ -1,0 +1,9 @@
+.start {
+  height: 200px;
+  text-align: center;
+  background-color: grey;
+  margin-top: 2px;
+}
+.fond {
+  font-size: 500%;
+}

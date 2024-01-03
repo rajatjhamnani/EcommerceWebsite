@@ -8,28 +8,30 @@ const NavbarComponent = (props) => {
 
   return (
     <>
-      <Navbar bg="dark" expand="sm" variant="dark">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
-            BUY BUDDY STORE
-          </Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/" exact>
-              Home
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/store">
-              Store
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/about">
-              About
-            </Nav.Link>
-          </Nav>
+      <div>
+        <Navbar bg="dark" expand="sm" variant="dark">
+          <Container>
+            <Navbar.Brand as={Link} to="/">
+              BUY BUDDY STORE
+            </Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link as={NavLink} to="/" exact>
+                Home
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/store">
+                Store
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/about">
+                About
+              </Nav.Link>
+            </Nav>
 
-          <Link to="/cart">
-            <Button variant="info">Cart-{qty}</Button>
-          </Link>
-        </Container>
-      </Navbar>
+            <Link to="/cart">
+              <Button variant="info">Cart-{qty}</Button>
+            </Link>
+          </Container>
+        </Navbar>
+      </div>
     </>
   );
 };
