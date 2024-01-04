@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-const MovieData = (props) => {
+const MovieData = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
