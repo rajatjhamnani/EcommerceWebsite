@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import MovieInputForm from "./MovieInputForm";
 
 const MovieData = () => {
   const [movies, setMovies] = useState([]);
@@ -39,6 +40,7 @@ const MovieData = () => {
   }, [fetchMovieHandler]);
   return (
     <>
+      <MovieInputForm />
       <section>
         <button onClick={fetchMovieHandler}>fetch data</button>
       </section>
