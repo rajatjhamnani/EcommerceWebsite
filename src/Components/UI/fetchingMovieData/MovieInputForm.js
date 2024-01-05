@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const MovieInputForm = () => {
+const MovieInputForm = (props) => {
   const [title, setTitle] = useState();
   const [openingText, setOpeningText] = useState();
   const [date, setDate] = useState();
@@ -26,6 +26,8 @@ const MovieInputForm = () => {
       Text: openingText,
       Date: date,
     };
+
+    props.data(NewMovieObj);
     console.log(NewMovieObj);
     setTitle("");
     setOpeningText("");
@@ -42,6 +44,7 @@ const MovieInputForm = () => {
             name="title"
             value={title}
             onChange={setTitleHandler}
+            required
           />
         </div>
         <div>
@@ -51,6 +54,7 @@ const MovieInputForm = () => {
             name="text"
             value={openingText}
             onChange={openingTextHandler}
+            required
           />
         </div>
         <div>
@@ -60,6 +64,7 @@ const MovieInputForm = () => {
             name="date"
             value={date}
             onChange={dateChangeHandler}
+            required
           />
         </div>
         <button type="submit">Add Movie</button>
