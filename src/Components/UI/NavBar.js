@@ -30,6 +30,9 @@ const NavbarComponent = (props) => {
               <Nav.Link as={NavLink} to="/about">
                 About
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/contactUs">
+                Contact Us
+              </Nav.Link>
             </Nav>
 
             <Link to="/cart">

@@ -7,6 +7,7 @@ import Banner from "./Components/UI/Banner";
 import ProductContextProvider from "./Components/Global/ProductContext";
 import CartContextProvider from "./Components/Global/CartContext";
 import Home from "./Components/UI/Home";
+import ContactUs from "./Components/ContactUs/ContactUs";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="cart" exact Component={Cart} />
               <Route path="store" exact Component={Banner} />
               <Route path="about" exact Component={About} />
+              <Route path="contactUs" Component={ContactUs} />
             </Routes>
           </Router>
         </CartContextProvider>
