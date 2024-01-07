@@ -7,7 +7,7 @@ const Cart = () => {
 
   return (
     <table className={classes.table}>
-      <thead>
+      <thead style={{ border: "1px solid black" }}>
         <tr>
           <th>Image</th>
           <th>Item</th>

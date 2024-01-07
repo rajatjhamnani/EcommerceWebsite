@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavbarComponent from "./Components/UI/NavBar";
 import Cart from "./Components/UI/Cart";
@@ -8,23 +8,23 @@ import ProductContextProvider from "./Components/Global/ProductContext";
 import CartContextProvider from "./Components/Global/CartContext";
 import Home from "./Components/UI/Home";
 import ContactUs from "./Components/ContactUs/ContactUs";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
 
 function App() {
   return (
     <>
       <ProductContextProvider>
         <CartContextProvider>
-          <Router>
-            <NavbarComponent />
+          <NavbarComponent />
 
-            <Routes>
-              <Route path="/" exact Component={Home} />
-              <Route path="cart" exact Component={Cart} />
-              <Route path="store" exact Component={Banner} />
-              <Route path="about" exact Component={About} />
-              <Route path="contactUs" Component={ContactUs} />
-            </Routes>
-          </Router>
+          <Routes>
+            <Route path="/" exact Component={Home} />
+            <Route path="cart" exact Component={Cart} />
+            <Route path="store" exact Component={Banner} />
+            <Route path="store/:productId" exact Component={ProductDetails} />
+            <Route path="about" exact Component={About} />
+            <Route path="contactUs" Component={ContactUs} />
+          </Routes>
         </CartContextProvider>
       </ProductContextProvider>
     </>

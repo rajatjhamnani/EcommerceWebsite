@@ -5,7 +5,7 @@ const ContactUs = (props) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [number, setNumber] = useState();
-  const [receivedData, setReceivedData] = useState();
+
   const nameChangeHandler = (event) => {
     console.log(event.target.value);
     setName(event.target.value);
