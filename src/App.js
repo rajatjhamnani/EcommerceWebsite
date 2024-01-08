@@ -9,6 +9,8 @@ import CartContextProvider from "./Components/Global/CartContext";
 import Home from "./Components/UI/Home";
 import ContactUs from "./Components/ContactUs/ContactUs";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import NotFound from "./Components/UI/NotFound";
+import AuthForm from "./Components/AuthenticationForm/AuthForm";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="store/:productId" exact Component={ProductDetails} />
             <Route path="about" exact Component={About} />
             <Route path="contactUs" Component={ContactUs} />
+            <Route path="*" Component={NotFound} />
+            <Route path="auth" Component={AuthForm} />
           </Routes>
         </CartContextProvider>
       </ProductContextProvider>
