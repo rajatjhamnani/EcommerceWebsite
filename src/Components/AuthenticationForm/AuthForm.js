@@ -29,6 +29,33 @@ const AuthForm = (props) => {
     };
     setLoading(true);
     if (isLogin) {
+      fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCmsyHecwTyMcmPtATrTp95uPPfPpZpVzc",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+            returnSecureToken: true,
+          }),
+          headers: {
+            "content-Type": "application/json",
+          },
+        }
+      ).then((response) => {
+        setLoading(false);
+        if (response.ok) {
+          console.log(response);
+        } else {
+          return response.json().then((data) => {
+            let errorMessage = "Authentication Failed!";
+            if (data && data.error.message && data.error.message) {
+              errorMessage = data.error.message;
+            }
+            alert(errorMessage);
+          });
+        }
+      });
     } else {
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCmsyHecwTyMcmPtATrTp95uPPfPpZpVzc",
