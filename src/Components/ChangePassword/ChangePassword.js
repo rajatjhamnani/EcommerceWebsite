@@ -19,7 +19,7 @@ const ChangePassword = () => {
         body: JSON.stringify({
           idToken: authCtx.token,
           password: password,
-          returnSecureToken: false,
+          returnSecureToken: true,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +28,7 @@ const ChangePassword = () => {
     )
       .then((res) => {
         console.log(res);
+        alert("password changed successfully");
       })
       .catch((err) => {
         console.log(err);
