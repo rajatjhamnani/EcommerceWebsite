@@ -71,7 +71,7 @@ const AuthForm = (props) => {
 
           authCtx.login(data.idToken);
 
-          navigate("/");
+          navigate("/store");
         })
         .catch((err) => {
           alert(err.message);
