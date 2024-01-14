@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import classes from "./AuthForm.module.css";
+import { Link } from "react-router-dom";
 import { json } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Global/AuthContext";
 const AuthForm = (props) => {
+  const navigate = useNavigate();
+
+  const authCtx = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [passcode, setPasscode] = useState();
   const [loading, setLoading] = useState(false);
   const [isLogin, setIslogin] = useState(false);
+
   const buttonToggleHandler = (e) => {
     e.preventDefault();
     setIslogin((prev) => {
@@ -27,6 +34,7 @@ const AuthForm = (props) => {
       email: email,
       password: passcode,
     };
+
     setLoading(true);
     if (isLogin) {
       fetch(
@@ -42,20 +50,31 @@ const AuthForm = (props) => {
             "content-Type": "application/json",
           },
         }
-      ).then((response) => {
-        setLoading(false);
-        if (response.ok) {
-          console.log(response);
-        } else {
-          return response.json().then((data) => {
-            let errorMessage = "Authentication Failed!";
-            if (data && data.error.message && data.error.message) {
-              errorMessage = data.error.message;
-            }
-            alert(errorMessage);
-          });
-        }
-      });
+      )
+        .then((response) => {
+          setLoading(false);
+          if (response.ok) {
+            return response.json();
+          } else {
+            return response.json().then((data) => {
+              let errorMessage = "Authentication Failed!";
+              if (data && data.error.message && data.error.message) {
+                errorMessage = data.error.message;
+              }
+
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then((data) => {
+          console.log(data);
+
+          authCtx.login(data.idToken);
+          navigate("/");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     } else {
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCmsyHecwTyMcmPtATrTp95uPPfPpZpVzc",
@@ -70,19 +89,29 @@ const AuthForm = (props) => {
             "content-Type": "application/json",
           },
         }
-      ).then((response) => {
-        setLoading(false);
-        if (response.ok) {
-        } else {
-          return response.json().then((data) => {
-            let errorMessage = "Authentication Failed!";
-            if (data && data.error.message && data.error.message) {
-              errorMessage = data.error.message;
-            }
-            alert(errorMessage);
-          });
-        }
-      });
+      )
+        .then((response) => {
+          setLoading(false);
+          if (response.ok) {
+            return response.json();
+          } else {
+            return response.json().then((data) => {
+              let errorMessage = "Authentication Failed!";
+              if (data && data.error.message && data.error.message) {
+                errorMessage = data.error.message;
+              }
+
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then((data) => {
+          authCtx.login(data.idToken);
+          navigate("/");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     }
     console.log(data);
   };
@@ -115,7 +144,7 @@ const AuthForm = (props) => {
             </Button>
           )}
         </Form>
-        <div>
+        <div className={classes.bat}>
           <Button
             variant="secondary"
             type="submit"

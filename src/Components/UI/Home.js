@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
-import MovieData from "./fetchingMovieData/MovieData";
+import ChangePassword from "../ChangePassword/ChangePassword";
 
 const Home = () => {
   return (
     <>
       <Header />
-      <h1>This is my Home Page</h1>
-      <MovieData />
+
+      <ChangePassword />
     </>
   );
 };

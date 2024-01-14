@@ -21,8 +21,12 @@
   border-radius: 10px;
   font-size: medium;
 }
+.bat {
+  text-align: center;
+}
 .btnn {
-  margin: 20px 43%;
+  margin: 20px;
+
   border: 1px solid purple;
   border-radius: 10px;
   font-size: medium;

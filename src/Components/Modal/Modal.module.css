@@ -1,0 +1,39 @@
+.modalWrapper {
+  position: absolute;
+  background-color: #dad2d2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.mode {
+  top: 0;
+  min-width: fit-content;
+  min-height: 500px;
+
+  background-color: grey;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  animation: fadeInDown 0.8s;
+}
+.btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

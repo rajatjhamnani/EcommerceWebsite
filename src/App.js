@@ -11,24 +11,29 @@ import ContactUs from "./Components/ContactUs/ContactUs";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import NotFound from "./Components/UI/NotFound";
 import AuthForm from "./Components/AuthenticationForm/AuthForm";
+import ChangePassword from "./Components/ChangePassword/ChangePassword";
+import ModalContextProvider from "./Components/Global/ModalContext";
 
 function App() {
   return (
     <>
       <ProductContextProvider>
         <CartContextProvider>
-          <NavbarComponent />
+          <ModalContextProvider>
+            <NavbarComponent />
 
-          <Routes>
-            <Route path="/" exact Component={Home} />
-            <Route path="cart" exact Component={Cart} />
-            <Route path="store" exact Component={Banner} />
-            <Route path="store/:productId" exact Component={ProductDetails} />
-            <Route path="about" exact Component={About} />
-            <Route path="contactUs" Component={ContactUs} />
-            <Route path="*" Component={NotFound} />
-            <Route path="auth" Component={AuthForm} />
-          </Routes>
+            <Routes>
+              <Route path="/" exact Component={Home} />
+              <Route path="cart" exact Component={Cart} />
+              <Route path="store" exact Component={Banner} />
+              <Route path="store/:productId" exact Component={ProductDetails} />
+              <Route path="about" exact Component={About} />
+              <Route path="contactUs" Component={ContactUs} />
+              <Route path="*" Component={NotFound} />
+              <Route path="auth" Component={AuthForm} />
+              <Route path="password" Component={ChangePassword} />
+            </Routes>
+          </ModalContextProvider>
         </CartContextProvider>
       </ProductContextProvider>
     </>

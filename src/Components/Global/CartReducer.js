@@ -51,7 +51,7 @@ export const cartReducer = (state, action) => {
           const updatedProduct = { ...updatedCart[index] };
           updatedProduct.qty -= 1;
           updatedCart[index] = updatedProduct;
-          const updatedTotalPrice = totalPrice + updatedProduct.price;
+          const updatedTotalPrice = totalPrice - updatedProduct.price;
           const updatedQty = qty - 1;
           return {
             shoppingCart: updatedCart,
