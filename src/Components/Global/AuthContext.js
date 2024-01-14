@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("idToken");
+  const [token, setToken] = useState(initialToken);
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
+    localStorage.setItem("idToken", token);
     setToken(token);
   };
   const logoutHandler = () => {
     alert("are you sure you want yo logout");
+    localStorage.removeItem("idToken");
     setToken(null);
   };
 

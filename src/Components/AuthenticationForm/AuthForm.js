@@ -70,6 +70,7 @@ const AuthForm = (props) => {
           console.log(data);
 
           authCtx.login(data.idToken);
+
           navigate("/");
         })
         .catch((err) => {
