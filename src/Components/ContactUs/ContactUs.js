@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./ContactUs.module.css";
 import Header from "../UI/Header";
+import Footer from "../UI/Footer";
 const ContactUs = (props) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -57,7 +58,7 @@ const ContactUs = (props) => {
   return (
     <>
       <Header />
-      <div className={classes.update}>
+      <div className={classes.update} style={{ marginBottom: "10%" }}>
         <form onSubmit={onSubmitHandler}>
           <div className={classes.single}>
             <label htmlFor="name"> Name :</label>
@@ -95,6 +96,7 @@ const ContactUs = (props) => {
           </button>
         </form>
       </div>
+      <Footer />
     </>
   );
 };
