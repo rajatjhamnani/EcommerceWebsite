@@ -9,6 +9,9 @@ const AuthContextProvider = (props) => {
 
   const loginHandler = (token) => {
     localStorage.setItem("idToken", token);
+    setTimeout(() => {
+      localStorage.removeItem("idToken");
+    }, 300000);
     setToken(token);
   };
   const logoutHandler = () => {
