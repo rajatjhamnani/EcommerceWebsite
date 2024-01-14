@@ -10,6 +10,7 @@ const AuthContextProvider = (props) => {
     setToken(token);
   };
   const logoutHandler = () => {
+    alert("are you sure you want yo logout");
     setToken(null);
   };
 
