@@ -7,17 +7,26 @@ const AuthContextProvider = (props) => {
   const [token, setToken] = useState(initialToken);
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token) => {
+  const calculateRemeaningTime = (expirationTime) => {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime).getTime();
+    const remeaningDuration = adjExpirationTime - currentTime;
+    return remeaningDuration;
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("idToken");
+    setToken(null);
+  };
+  const loginHandler = (token, expirationTime) => {
     localStorage.setItem("idToken", token);
+
+    setToken(token);
     setTimeout(() => {
       localStorage.removeItem("idToken");
     }, 300000);
-    setToken(token);
-  };
-  const logoutHandler = () => {
-    alert("are you sure you want yo logout");
-    localStorage.removeItem("idToken");
-    setToken(null);
+    const remeaningTime = calculateRemeaningTime(expirationTime);
+    setTimeout(logoutHandler, remeaningTime);
   };
 
   const contextValue = {

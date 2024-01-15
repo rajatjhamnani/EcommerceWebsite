@@ -10,6 +10,7 @@ const NavbarComponent = (props) => {
   const { qty } = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const modalCtx = useContext(ModalContext);
+  const { dispatch } = useContext(CartContext);
 
   const logoutUser = () => {
     authCtx.logout();
@@ -37,7 +38,11 @@ const NavbarComponent = (props) => {
                 </Nav.Link>
               )}
               {isLoggedIn && (
-                <Nav.Link as={NavLink} to="/store">
+                <Nav.Link
+                  as={NavLink}
+                  to="/store"
+                  onClick={() => dispatch({ type: "ZERO" })}
+                >
                   Store
                 </Nav.Link>
               )}
