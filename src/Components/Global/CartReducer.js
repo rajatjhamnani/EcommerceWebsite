@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const initialState = {
   shoppingCart: [],
   totalPrice: 0,
@@ -10,6 +12,8 @@ export const cartReducer = (state = initialState, action) => {
   let index;
   let updatedPrice;
   let updatedQty;
+  let newEmail = localStorage.getItem("email");
+  let createNewEmail = newEmail ? newEmail.replace(/[@.]/g, "") : "";
 
   switch (action.type) {
     case "ADD_TO_CART":
@@ -21,13 +25,37 @@ export const cartReducer = (state = initialState, action) => {
         product["qty"] = 1;
         updatedQty = qty + 1;
         updatedPrice = totalPrice + product.price;
+
+        fetch(
+          `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              id: product.id,
+              shoppingCart: [...shoppingCart, product],
+              totalPrice: updatedPrice,
+              qty: updatedQty,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("POST request success:", data);
+          })
+          .catch((error) => {
+            console.error("Error making POST request:", error);
+          });
+
         return {
           shoppingCart: [...shoppingCart, product],
           totalPrice: updatedPrice,
           qty: updatedQty,
         };
       }
-
+      break;
     case "INC":
       index = shoppingCart.findIndex((cart) => cart.id === action.id);
       if (index !== -1) {
@@ -36,17 +64,39 @@ export const cartReducer = (state = initialState, action) => {
         updatedProduct.qty += 1;
         updatedCart[index] = updatedProduct;
 
-        const updatedTotalPrice = totalPrice + updatedProduct.price;
-        const updatedQty = qty + 1;
+        updatedPrice = totalPrice + updatedProduct.price;
+        updatedQty = qty + 1;
+
+        fetch(
+          `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              shoppingCart: updatedCart,
+              totalPrice: updatedPrice,
+              qty: updatedQty,
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("PUT request success:", data);
+          })
+          .catch((error) => {
+            console.error("Error making PUT request:", error);
+          });
 
         return {
           shoppingCart: updatedCart,
-          totalPrice: updatedTotalPrice,
+          totalPrice: updatedPrice,
           qty: updatedQty,
         };
       }
       return state;
-
+      break;
     case "DEC":
       product = action.cart;
       if (product.qty > 1) {
@@ -56,16 +106,41 @@ export const cartReducer = (state = initialState, action) => {
           const updatedProduct = { ...updatedCart[index] };
           updatedProduct.qty -= 1;
           updatedCart[index] = updatedProduct;
-          const updatedTotalPrice = totalPrice - updatedProduct.price;
-          const updatedQty = qty - 1;
+          updatedPrice = totalPrice - updatedProduct.price;
+          updatedQty = qty - 1;
+
+          fetch(
+            `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                shoppingCart: updatedCart,
+                totalPrice: updatedPrice,
+                qty: updatedQty,
+              }),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("PUT request success:", data);
+            })
+            .catch((error) => {
+              console.error("Error making PUT request:", error);
+            });
+
           return {
             shoppingCart: updatedCart,
-            totalPrice: updatedTotalPrice,
+            totalPrice: updatedPrice,
             qty: updatedQty,
           };
         }
       }
       return state;
+
+      break;
 
     case "DELETE":
       const filtered = shoppingCart.filter(
@@ -74,32 +149,90 @@ export const cartReducer = (state = initialState, action) => {
       product = action.cart;
       updatedQty = qty - product.qty;
       updatedPrice = totalPrice - product.price * product.qty;
+
+      fetch(
+        `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            shoppingCart: filtered,
+            totalPrice: updatedPrice,
+            qty: updatedQty,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("PUT request success:", data);
+        })
+        .catch((error) => {
+          console.error("Error making PUT request:", error);
+        });
+
       return {
-        shoppingCart: [...filtered],
+        shoppingCart: filtered,
         totalPrice: updatedPrice,
         qty: updatedQty,
       };
-
+      break;
     case "PLACED":
       if (shoppingCart.length > 0) {
-        const updatedPrice = totalPrice;
+        fetch(
+          `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              shoppingCart: [],
+              totalPrice: totalPrice,
+              qty: 0,
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("PUT request success:", data);
+          })
+          .catch((error) => {
+            console.error("Error making PUT request:", error);
+          });
+
         return {
           shoppingCart: [],
-          totalPrice: updatedPrice,
+          totalPrice: totalPrice,
           qty: 0,
         };
       }
-
+      return state;
+      break;
     case "ZERO":
       if (shoppingCart.length === 0) {
-        const updatedPrice = 0;
         return {
           shoppingCart: [],
-          totalPrice: updatedPrice,
+          totalPrice: 0,
           qty: 0,
         };
       }
-
+      return state;
+      break;
+    // case "UPDATE_CART":
+    //   let updatedCart;
+    //   if (shoppingCart) {
+    //     updatedCart = action.cart;
+    //     updatedPrice = action.price;
+    //     updatedQty = action.quantity;
+    //   }
+    //   return {
+    //     shoppingCart: updatedCart,
+    //     totalPrice: updatedPrice,
+    //     qty: updatedQty,
+    //   };
+    //   break;
     default:
       return state;
   }

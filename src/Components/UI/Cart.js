@@ -1,10 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./Cart.module.css";
 import { CartContext } from "../Global/CartContext";
 import ModalOverlay from "../Modal/Modal";
 import { ModalContext } from "../Global/ModalContext";
+import axios from "axios";
 
 const Cart = () => {
+  let newEmail = localStorage.getItem("email");
+  let createNewEmail = newEmail.replace(/[@.]/g, "");
+
   const [show, setShow] = useState(false);
   const modalCtx = useContext(ModalContext);
   const { shoppingCart, totalPrice, qty, dispatch } = useContext(CartContext);
@@ -14,6 +18,28 @@ const Cart = () => {
       type: "PLACED",
     });
   };
+  useEffect(() => {
+    axios
+      .get(
+        `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`
+      )
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        if (data) {
+          dispatch({
+            type: "UPDATE_CART",
+            cartData: data.shoppingCart,
+            quantity: data.qty,
+            price: data.totalPrice,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cart data:", error);
+      });
+  }, []);
+
   return (
     <ModalOverlay show={modalCtx.show}>
       {show && (
