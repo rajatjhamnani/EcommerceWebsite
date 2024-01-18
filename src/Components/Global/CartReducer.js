@@ -42,6 +42,7 @@ export const cartReducer = (state = initialState, action) => {
           }
         )
           .then((res) => res.json())
+
           .then((data) => {
             console.log("POST request success:", data);
           })
@@ -56,6 +57,7 @@ export const cartReducer = (state = initialState, action) => {
         };
       }
       break;
+
     case "INC":
       index = shoppingCart.findIndex((cart) => cart.id === action.id);
       if (index !== -1) {
@@ -70,7 +72,7 @@ export const cartReducer = (state = initialState, action) => {
         fetch(
           `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
           {
-            method: "PUT",
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -112,7 +114,7 @@ export const cartReducer = (state = initialState, action) => {
           fetch(
             `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
             {
-              method: "PUT",
+              method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -153,7 +155,7 @@ export const cartReducer = (state = initialState, action) => {
       fetch(
         `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
@@ -181,9 +183,9 @@ export const cartReducer = (state = initialState, action) => {
     case "PLACED":
       if (shoppingCart.length > 0) {
         fetch(
-          `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`,
+          `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com//cart${createNewEmail}.json`,
           {
-            method: "PUT",
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -211,7 +213,7 @@ export const cartReducer = (state = initialState, action) => {
       return state;
       break;
     case "ZERO":
-      if (shoppingCart.length === 0) {
+      if (shoppingCart && shoppingCart.length === 0) {
         return {
           shoppingCart: [],
           totalPrice: 0,
@@ -220,19 +222,30 @@ export const cartReducer = (state = initialState, action) => {
       }
       return state;
       break;
+
     // case "UPDATE_CART":
+    //   let fetchedData = action.cartData;
+    //   console.log(fetchedData);
     //   let updatedCart;
-    //   if (shoppingCart) {
-    //     updatedCart = action.cart;
-    //     updatedPrice = action.price;
-    //     updatedQty = action.quantity;
+    //   for (let i = 0; i < fetchedData.length; i++) {
+    //     updatedCart = fetchedData[i].shoppingCart;
+    //     updatedPrice = fetchedData[i].totalPrice;
+    //     updatedQty = fetchedData[i].qty;
     //   }
+
+    //   // let updatedCart;
+    //   // if (fetchedData) {
+    //   //   updatedCart = fetchedData.shoppingCart;
+    //   //   updatedPrice = parseInt(fetchedData.totalPrice, 10);
+    //   //   updatedQty = parseInt(fetchedData.qty);
+    //   // }
     //   return {
     //     shoppingCart: updatedCart,
     //     totalPrice: updatedPrice,
     //     qty: updatedQty,
     //   };
     //   break;
+
     default:
       return state;
   }

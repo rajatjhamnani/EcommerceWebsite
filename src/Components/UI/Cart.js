@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import classes from "./Cart.module.css";
+import axios from "axios";
 import { CartContext } from "../Global/CartContext";
 import ModalOverlay from "../Modal/Modal";
 import { ModalContext } from "../Global/ModalContext";
-import axios from "axios";
+import classes from "./Cart.module.css";
 
 const Cart = () => {
   let newEmail = localStorage.getItem("email");
@@ -12,33 +12,47 @@ const Cart = () => {
   const [show, setShow] = useState(false);
   const modalCtx = useContext(ModalContext);
   const { shoppingCart, totalPrice, qty, dispatch } = useContext(CartContext);
+
+  // useEffect(() => {
+  //   console.log("Effect triggered with email:", createNewEmail);
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`
+  //       );
+
+  //       //console.log(response.data);
+  //       const data = await response.data;
+  //       console.log(data, "Data");
+  //       const retrivedData = Object.keys(data).map((key) => ({
+  //         id: key,
+  //         qty: data[key].qty,
+  //         shoppingCart: data[key].shoppingCart,
+  //         totalPrice: data[key].totalPrice,
+  //       }));
+  //       console.log("AAAA", retrivedData);
+
+  //       console.log("UPDATED CART", updatedCart);
+  //       if (retrivedData) {
+  //         dispatch({
+  //           type: "UPDATE_CART",
+  //           cartData: retrivedData,
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data from Firebase:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [createNewEmail]);
+
   const orderPlaceHandler = () => {
     setShow(true);
     dispatch({
       type: "PLACED",
     });
   };
-  useEffect(() => {
-    axios
-      .get(
-        `https://react-ecommerce-website-fc29d-default-rtdb.firebaseio.com/cart${createNewEmail}.json`
-      )
-      .then((response) => {
-        const data = response.data;
-        console.log(data);
-        if (data) {
-          dispatch({
-            type: "UPDATE_CART",
-            cartData: data.shoppingCart,
-            quantity: data.qty,
-            price: data.totalPrice,
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching cart data:", error);
-      });
-  }, []);
 
   return (
     <ModalOverlay show={modalCtx.show}>
@@ -60,15 +74,14 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {shoppingCart.length > 0 ? (
+            {shoppingCart && shoppingCart.length > 0 ? (
               shoppingCart.map((cart) => (
                 <tr key={cart.id}>
                   <td>
-                    <img src={cart.imageUrl} />
+                    <img src={cart.imageUrl} alt={`item-${cart.id}`} />
                   </td>
                   <td>{cart.title}</td>
                   <td>{cart.price}</td>
-
                   <td>{cart.qty}</td>
                   <td>
                     <div className={classes.btn}>
@@ -117,20 +130,25 @@ const Cart = () => {
                 </tr>
               ))
             ) : (
-              <h1 style={{ color: "white" }}>your cart is Empty</h1>
+              <tr>
+                <td colSpan="5">
+                  <h1 style={{ color: "white" }}>your cart is Empty</h1>
+                </td>
+              </tr>
             )}
           </tbody>
           <div>
             <h3>
-              {shoppingCart.length > 0
+              {shoppingCart && shoppingCart.length > 0
                 ? `Total Amount:${totalPrice}`
                 : `Total  Amount:${0}`}
             </h3>
-            <button onClick={() => orderPlaceHandler()}>Place Order</button>
+            <button onClick={orderPlaceHandler}>Place Order</button>
           </div>
         </table>
       )}
     </ModalOverlay>
   );
 };
+
 export default Cart;
